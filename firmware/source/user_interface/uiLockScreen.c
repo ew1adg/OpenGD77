@@ -100,23 +100,23 @@ static void redrawScreen(bool update, bool state)
 		buf[bufferLen - 1] = 0;
 
 #if defined(PLATFORM_DM5R)
-		ucPrintCentered(6, buf, FONT_6x8_BOLD);
-		ucPrintCentered(14, currentLanguage->locked, FONT_6x8_BOLD);
-		ucPrintCentered(24, currentLanguage->press_blue_plus_star, FONT_6x8);
-		ucPrintCentered(32, currentLanguage->to_unlock, FONT_6x8);
+		ucPrintCentered(6, buf, FONT_XS_BOLD);
+		ucPrintCentered(14, currentLanguage->locked, FONT_XS_BOLD);
+		ucPrintCentered(24, currentLanguage->press_blue_plus_star, FONT_XS);
+		ucPrintCentered(32, currentLanguage->to_unlock, FONT_XS);
 #else
-		ucPrintCentered(6, buf, FONT_8x16);
-		ucPrintCentered(22, currentLanguage->locked, FONT_8x16);
-		ucPrintCentered(40, currentLanguage->press_blue_plus_star, FONT_6x8);
-		ucPrintCentered(48, currentLanguage->to_unlock, FONT_6x8);
+		ucPrintCentered(6, buf, FONT_MD);
+		ucPrintCentered(22, currentLanguage->locked, FONT_MD);
+		ucPrintCentered(40, currentLanguage->press_blue_plus_star, FONT_XS);
+		ucPrintCentered(48, currentLanguage->to_unlock, FONT_XS);
 #endif
 	}
 	else
 	{
 #if defined(PLATFORM_DM5R)
-		ucPrintCentered(16, currentLanguage->unlocked, FONT_8x16);
+		ucPrintCentered(16, currentLanguage->unlocked, FONT_MD);
 #else
-		ucPrintCentered(24, currentLanguage->unlocked, FONT_8x16);
+		ucPrintCentered(24, currentLanguage->unlocked, FONT_MD);
 #endif
 	}
 

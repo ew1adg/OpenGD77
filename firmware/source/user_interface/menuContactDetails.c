@@ -180,12 +180,12 @@ static void updateScreen(void)
 		}
 		break;
 	case MENU_CONTACT_DETAILS_SAVED:
-		ucPrintCentered(16,currentLanguage->contact_saved, FONT_8x16);
+		ucPrintCentered(16,currentLanguage->contact_saved, FONT_MD);
 		ucDrawChoice(CHOICE_OK, false);
 		break;
 	case MENU_CONTACT_DETAILS_EXISTS:
-		ucPrintCentered(16, currentLanguage->duplicate, FONT_8x16);
-		ucPrintCentered(32, currentLanguage->contact, FONT_8x16);
+		ucPrintCentered(16, currentLanguage->duplicate, FONT_MD);
+		ucPrintCentered(32, currentLanguage->contact, FONT_MD);
 		ucDrawChoice(CHOICE_OK, false);
 		break;
 	}

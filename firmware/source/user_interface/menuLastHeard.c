@@ -197,9 +197,9 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 		// PC or TG
 		sprintf(buffer, "%s %u", (((TGorPC >> 24) == PC_CALL_FLAG) ? "PC" : "TG"), tg);
 #if defined(PLATFORM_DM5R)
-		ucPrintAt(0, y, buffer, FONT_8x8);
+		ucPrintAt(0, y, buffer, FONT_SM);
 #else
-		ucPrintAt(0, y, buffer, FONT_8x16);
+		ucPrintAt(0, y, buffer, FONT_MD);
 #endif
 
 		// Time
@@ -207,11 +207,11 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 		buffer[5] = 0;
 
 #if defined(PLATFORM_DM5R)
-		ucPrintAt((128 - (3 * 6)), y, "min", FONT_6x8);
-		ucPrintAt((128 - (strlen(buffer) * 8) - (3 * 6) - 1), y, buffer, FONT_8x8);
+		ucPrintAt((128 - (3 * 6)), y, "min", FONT_XS);
+		ucPrintAt((128 - (strlen(buffer) * 8) - (3 * 6) - 1), y, buffer, FONT_SM);
 #else
-		ucPrintAt((128 - (3 * 6)), (y + 6), "min", FONT_6x8);
-		ucPrintAt((128 - (strlen(buffer) * 8) - (3 * 6) - 1), y, buffer, FONT_8x16);
+		ucPrintAt((128 - (3 * 6)), (y + 6), "min", FONT_XS);
+		ucPrintAt((128 - (strlen(buffer) * 8) - (3 * 6) - 1), y, buffer, FONT_MD);
 #endif
 
 	}
@@ -234,9 +234,9 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 					buffer[cpos] = 0;
 
 #if defined(PLATFORM_DM5R)
-					ucPrintCentered(y, chomp(buffer), FONT_8x8);
+					ucPrintCentered(y, chomp(buffer), FONT_SM);
 #else
-					ucPrintCentered(y, chomp(buffer), FONT_8x16);
+					ucPrintCentered(y, chomp(buffer), FONT_MD);
 #endif
 				}
 				else // Nope, look for first name
@@ -262,9 +262,9 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 						outputBuf[16] = 0;
 
 #if defined(PLATFORM_DM5R)
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x8);
+						ucPrintCentered(y, chomp(outputBuf), FONT_SM);
 #else
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x16);
+						ucPrintCentered(y, chomp(outputBuf), FONT_MD);
 #endif
 					}
 					else
@@ -280,9 +280,9 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 						outputBuf[16] = 0;
 
 #if defined(PLATFORM_DM5R)
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x8);
+						ucPrintCentered(y, chomp(outputBuf), FONT_SM);
 #else
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x16);
+						ucPrintCentered(y, chomp(outputBuf), FONT_MD);
 #endif
 					}
 				}
@@ -294,9 +294,9 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 				buffer[16] = 0;
 
 #if defined(PLATFORM_DM5R)
-				ucPrintCentered(y, chomp(buffer), FONT_8x8);
+				ucPrintCentered(y, chomp(buffer), FONT_SM);
 #else
-				ucPrintCentered(y, chomp(buffer), FONT_8x16);
+				ucPrintCentered(y, chomp(buffer), FONT_MD);
 #endif
 			}
 		}
@@ -306,9 +306,9 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 			buffer[strlen(text)] = 0;
 
 #if defined(PLATFORM_DM5R)
-			ucPrintCentered(y, chomp(buffer), FONT_8x8);
+			ucPrintCentered(y, chomp(buffer), FONT_SM);
 #else
-			ucPrintCentered(y, chomp(buffer), FONT_8x16);
+			ucPrintCentered(y, chomp(buffer), FONT_MD);
 #endif
 		}
 	}

@@ -413,9 +413,9 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 				snprintf(buffer, bufferLen, " %d ", txTimeSecs);
 				buffer[bufferLen - 1] = 0;
 #if defined(PLATFORM_DM5R)
-				ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_8x16);
+				ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_MD);
 #else
-				ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_16x32);
+				ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_LG);
 #endif
 				verticalPositionOffset=16;
 			}
@@ -449,9 +449,9 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 						}
 						nameBuf[nameBufferLen - 1] = 0;
 #if defined(PLATFORM_DM5R)
-						ucPrintCentered(40 , nameBuf, FONT_6x8);
+						ucPrintCentered(40 , nameBuf, FONT_XS);
 #else
-						ucPrintCentered(50 , nameBuf, FONT_6x8);
+						ucPrintCentered(50 , nameBuf, FONT_XS);
 #endif
 					}
 					else
@@ -468,9 +468,9 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 							nameBuf[nameBufferLen - 1] = 0;
 						}
 #if defined(PLATFORM_DM5R)
-						ucPrintCentered(40, (char *)nameBuf, FONT_6x8);
+						ucPrintCentered(40, (char *)nameBuf, FONT_XS);
 #else
-						ucPrintCentered(50, (char *)nameBuf, FONT_6x8);
+						ucPrintCentered(50, (char *)nameBuf, FONT_XS);
 #endif
 					}
 				}
@@ -480,9 +480,9 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 			{
 				codeplugUtilConvertBufToString(channelScreenChannelData.name, nameBuf, 16);
 #if defined(PLATFORM_DM5R)
-				ucPrintCentered(24 + verticalPositionOffset, nameBuf, FONT_8x8);
+				ucPrintCentered(24 + verticalPositionOffset, nameBuf, FONT_SM);
 #else
-				ucPrintCentered(32 + verticalPositionOffset, nameBuf, FONT_8x16);
+				ucPrintCentered(32 + verticalPositionOffset, nameBuf, FONT_MD);
 #endif
 			}
 
@@ -522,9 +522,9 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 					codeplugUtilConvertBufToString(contactData.name, nameBuf, 16);
 				}
 #if defined(PLATFORM_DM5R)
-				ucPrintCentered(CONTACT_Y_POS + verticalPositionOffset + 2, nameBuf, FONT_8x8);
+				ucPrintCentered(CONTACT_Y_POS + verticalPositionOffset + 2, nameBuf, FONT_SM);
 #else
-				ucPrintCentered(CONTACT_Y_POS + verticalPositionOffset, nameBuf, FONT_8x16);
+				ucPrintCentered(CONTACT_Y_POS + verticalPositionOffset, nameBuf, FONT_MD);
 #endif
 			}
 			// Squelch will be cleared later, 1s after last change
@@ -536,9 +536,9 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 				buffer[8] = 0; // Avoid overlap with bargraph
 				// Center squelch word between col0 and bargraph, if possible.
 #if defined(PLATFORM_DM5R)
-				ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_8x8);
+				ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_SM);
 #else
-				ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_8x16);
+				ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_MD);
 #endif
 				int bargraph = 1 + ((currentChannelData->sql - 1) * 5) /2;
 #if defined(PLATFORM_DM5R)

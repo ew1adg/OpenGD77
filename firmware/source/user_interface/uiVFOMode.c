@@ -335,17 +335,17 @@ void menuVFOModeUpdateScreen(int txTimeSecs)
 				if (trxIsTransmitting)
 				{
 #if defined(PLATFORM_DM5R)
-					ucPrintCentered(28, buffer, FONT_8x8);
+					ucPrintCentered(28, buffer, FONT_MD); //SM
 #else
-					ucPrintCentered(34, buffer, FONT_8x16);
+					ucPrintCentered(34, buffer, FONT_MD);
 #endif
 				}
 				else
 				{
 #if defined(PLATFORM_DM5R)
-					ucPrintCentered(CONTACT_Y_POS + 2, buffer, FONT_8x8);
+					ucPrintCentered(CONTACT_Y_POS + 2, buffer, FONT_MD); // SM
 #else
-					ucPrintCentered(CONTACT_Y_POS, buffer, FONT_8x16);
+					ucPrintCentered(CONTACT_Y_POS, buffer, FONT_MD);
 #endif
 				}
 			}
@@ -366,9 +366,9 @@ void menuVFOModeUpdateScreen(int txTimeSecs)
 					buffer[8] = 0; // Avoid overlap with bargraph
 					// Center squelch word between col0 and bargraph, if possible.
 #if defined(PLATFORM_DM5R)
-					ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_8x8);
+					ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_MD); // SM
 #else
-					ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_8x16);
+					ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_MD);
 #endif
 					int bargraph = 1 + ((currentChannelData->sql - 1) * 5) /2;
 #if defined(PLATFORM_DM5R)
@@ -389,7 +389,7 @@ void menuVFOModeUpdateScreen(int txTimeSecs)
 				if(toneScanActive == true)
 				{
 					sprintf(buffer,"CTCSS %d.%dHz",TRX_CTCSSTones[scanIndex]/10,TRX_CTCSSTones[scanIndex] % 10);
-					ucPrintCentered(16,buffer, FONT_8x16);
+					ucPrintCentered(16,buffer, FONT_MD);
 				}
 
 			}
@@ -422,9 +422,9 @@ void menuVFOModeUpdateScreen(int txTimeSecs)
 
 					snprintf(buffer, bufferLen, " %d ", txTimeSecs);
 #if defined(PLATFORM_DM5R)
-					ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_8x16);
+					ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_LG);	// MD
 #else
-					ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_16x32);
+					ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_LG);
 #endif
 				}
 
@@ -442,9 +442,9 @@ void menuVFOModeUpdateScreen(int txTimeSecs)
 																	nonVolatileSettings.vfoScanHigh[nonVolatileSettings.currentVFONumber] / 100000, (nonVolatileSettings.vfoScanHigh[nonVolatileSettings.currentVFONumber] - (nonVolatileSettings.vfoScanHigh[nonVolatileSettings.currentVFONumber] / 100000) * 100000)/100);
 					buffer[bufferLen - 1] = 0;
 #if defined(PLATFORM_DM5R)
-					ucPrintAt(0, 40, buffer, FONT_8x8);
+					ucPrintAt(0, 40, buffer, FONT_MD);	// SM
 #else
-					ucPrintAt(0, 48, buffer, FONT_8x16);
+					ucPrintAt(0, 48, buffer, FONT_MD);
 #endif
 				}
 			}
@@ -463,19 +463,19 @@ void menuVFOModeUpdateScreen(int txTimeSecs)
 					if (selectedFreq == VFO_SELECTED_FREQUENCY_INPUT_TX)
 					{
 #if defined(PLATFORM_DM5R)
-						ucPrintAt(FREQUENCY_X_POS, 40, buffer, FONT_8x8);
-						ucPrintAt(128 - (3 * 8), 40, "MHz", FONT_8x8);
+						ucPrintAt(FREQUENCY_X_POS, 40, buffer, FONT_MD);	// SM
+						ucPrintAt(128 - (3 * 8), 40, "MHz", FONT_MD);
 #else
-						ucPrintCentered(48, buffer, FONT_8x16);
+						ucPrintCentered(48, buffer, FONT_MD);
 #endif
 					}
 					else
 					{
 #if defined(PLATFORM_DM5R)
-						ucPrintAt(FREQUENCY_X_POS, 32, buffer, FONT_8x8);
-						ucPrintAt(128 - (3 * 8), 32, "MHz", FONT_8x8);
+						ucPrintAt(FREQUENCY_X_POS, 32, buffer, FONT_MD);	// SM
+						ucPrintAt(128 - (3 * 8), 32, "MHz", FONT_MD);
 #else
-						ucPrintCentered(32, buffer, FONT_8x16);
+						ucPrintCentered(32, buffer, FONT_MD);
 #endif
 					}
 				}
@@ -485,9 +485,9 @@ void menuVFOModeUpdateScreen(int txTimeSecs)
 							freq_enter_digits[0], freq_enter_digits[1], freq_enter_digits[2], freq_enter_digits[3], freq_enter_digits[4], freq_enter_digits[5],
 							freq_enter_digits[6] , freq_enter_digits[7], freq_enter_digits[8], freq_enter_digits[9], freq_enter_digits[10], freq_enter_digits[11]);
 #if defined(PLATFORM_DM5R)
-					ucPrintCentered(40, buffer, FONT_8x8);
+					ucPrintCentered(40, buffer, FONT_MD);	// SM
 #else
-					ucPrintCentered(48, buffer, FONT_8x16);
+					ucPrintCentered(48, buffer, FONT_MD);
 #endif
 				}
 			}

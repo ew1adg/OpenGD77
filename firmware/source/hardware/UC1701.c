@@ -106,19 +106,19 @@ int ucPrintCore(int16_t x, int16_t y, const char *szMsg, ucFont_t fontSize, ucTe
 
     switch(fontSize)
     {
-    	case FONT_6x8:
+    	case FONT_XS:
     		currentFont = (uint8_t *) font_6x8;
     		break;
-    	case FONT_6x8_BOLD:
+    	case FONT_XS_BOLD:
 			currentFont = (uint8_t *) font_6x8_bold;
     		break;
-    	case FONT_8x8:
+    	case FONT_SM:
     		currentFont = (uint8_t *) font_8x8;
     		break;
-    	case FONT_8x16:
+    	case FONT_MD:
     		currentFont = (uint8_t *) font_8x16;
 			break;
-    	case FONT_16x32:
+    	case FONT_LG:
     		currentFont = (uint8_t *) font_16x32;
 			break;
 
@@ -1020,9 +1020,9 @@ void ucDrawChoice(ucChoice_t choice, bool clearRegion)
 			x = 2;
 
 #if defined(PLATFORM_DM5R)
-		ucPrintAt(x, y, lText, FONT_8x8);
+		ucPrintAt(x, y, lText, FONT_SM);
 #else
-		ucPrintAt(x, y, lText, FONT_8x16);
+		ucPrintAt(x, y, lText, FONT_MD);
 #endif
 	}
 
@@ -1035,9 +1035,9 @@ void ucDrawChoice(ucChoice_t choice, bool clearRegion)
 			x = (126 - len);
 
 #if defined(PLATFORM_DM5R)
-		ucPrintAt(x, y, rText, FONT_8x8);
+		ucPrintAt(x, y, rText, FONT_SM);
 #else
-		ucPrintAt(x, y, rText, FONT_8x16);
+		ucPrintAt(x, y, rText, FONT_MD);
 #endif
 	}
 }
