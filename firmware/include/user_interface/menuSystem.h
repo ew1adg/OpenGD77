@@ -31,11 +31,18 @@ typedef struct
 	uint32_t 	    time;
 } uiEvent_t;
 
-#if defined(PLATFORM_DM5R)
-#define MENU_MAX_DISPLAYED_ENTRIES 2
-#else
 #define MENU_MAX_DISPLAYED_ENTRIES 3
+
+#if defined(PLATFORM_DM5R)
+#define MENU_ENTRY_HEIGHT 11
+#define LOOP_OFFSET 6
+#define SEL_OFFSET 1
+#else
+#define MENU_ENTRY_HEIGHT 16
+#define LOOP_OFFSET 0
+#define SEL_OFFSET 0
 #endif
+
 #define MENU_INC(O, M) do { O = (O + 1) % M; } while(0)
 #define MENU_DEC(O, M) do { O = (O + M - 1) % M; } while(0)
 

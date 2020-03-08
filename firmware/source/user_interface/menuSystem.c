@@ -301,9 +301,9 @@ void menuDisplayEntry(int loopOffset, int focusedItem,const char *entryText)
 	bool focused = (focusedItem == gMenusCurrentItemIndex);
 
 	if (focused)
-		ucFillRoundRect(0, (loopOffset + 2) * 16, 128, 16, 2, true);
+		ucFillRoundRect(0, ((loopOffset + 2) * MENU_ENTRY_HEIGHT) + LOOP_OFFSET - SEL_OFFSET, 128, MENU_ENTRY_HEIGHT, 2, true);
 
-	ucPrintCore(0, (loopOffset + 2) * 16, entryText, FONT_MD, TEXT_ALIGN_LEFT, focused);
+	ucPrintCore(0, ((loopOffset + 2) * MENU_ENTRY_HEIGHT) + LOOP_OFFSET, entryText, FONT_MD, TEXT_ALIGN_LEFT, focused);
 }
 
 int menuGetMenuOffset(int maxMenuEntries, int loopOffset)
@@ -356,23 +356,25 @@ void menuUpdateCursor(int pos, bool moved, bool render)
 	static uint32_t lastBlink = 0;
 	static bool     blink = false;
 	uint32_t        m = fw_millis();
+	char y_pos = LCD_Y_RES - (MENU_ENTRY_HEIGHT + 2);
 
 	if (moved) {
 		blink = true;
 	}
 	if (moved || (m - lastBlink) > 500)
 	{
-		ucDrawFastHLine(pos*8, 46, 8, blink);
+		ucDrawFastHLine(pos*8, y_pos, 8, blink);
 
 		blink = !blink;
 		lastBlink = m;
 
 		if (render) {
-			ucRenderRows(5,6);
+			// calculate upper row idx
+			char row = floor(y_pos / 8);
+			ucRenderRows(row,row + 1);
 		}
 	}
 }
-
 void moveCursorLeftInString(char *str, int *pos, bool delete)
 {
 	int nLen = strlen(str);
