@@ -53,6 +53,14 @@ typedef enum
 	CHOICES_NUM
 } ucChoice_t;
 
+#if defined(PLATFORM_DM5R)
+#define LCD_Y_RES 48
+#else
+#define LCD_Y_RES 64
+#endif
+#define LCD_X_RES 128
+
+
 extern uint8_t screenBuf[];
 
 void ucBegin(bool isInverted);
