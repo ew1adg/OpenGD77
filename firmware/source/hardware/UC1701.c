@@ -112,17 +112,29 @@ int ucPrintCore(int16_t x, int16_t y, const char *szMsg, ucFont_t fontSize, ucTe
     	case FONT_XS_BOLD:
 			currentFont = (uint8_t *) font_6x8_bold;
     		break;
+#if defined(PLATFORM_DM5R)
     	case FONT_SM:
     		currentFont = (uint8_t *) font_8x8;
     		break;
     	case FONT_MD:
-    		currentFont = (uint8_t *) font_8x16;
+    		currentFont = (uint8_t *) font_8x8;
 			break;
     	case FONT_LG:
-    		currentFont = (uint8_t *) font_16x32;
+    		currentFont = (uint8_t *) font_8x16;
 			break;
+#else
+      	case FONT_SM:
+        	currentFont = (uint8_t *) font_8x8;
+        	break;
+        case FONT_MD:
+        	currentFont = (uint8_t *) font_8x16;
+    		break;
+        case FONT_LG:
+        	currentFont = (uint8_t *) font_16x32;
+    		break;
+#endif
 
-    	default:
+        default:
     		return -2;// Invalid font selected
     		break;
     }
