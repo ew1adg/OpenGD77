@@ -99,11 +99,7 @@ static void updateScreen(void)
 
 		if (gMenusEndIndex == 0)
 		{
-#if defined(PLATFORM_DM5R)
-			ucPrintCentered(20, currentLanguage->empty_list, FONT_MD);
-#else
-			ucPrintCentered(32, currentLanguage->empty_list, FONT_MD);
-#endif
+			ucPrintCentered(LCD_Y_RES / 2, currentLanguage->empty_list, FONT_MD);
 		}
 		else
 		{
@@ -123,33 +119,20 @@ static void updateScreen(void)
 	case MENU_CONTACT_LIST_CONFIRM:
 		codeplugUtilConvertBufToString(contactListContactData.name, nameBuf, 16);
 		menuDisplayTitle(nameBuf);
-#if defined(PLATFORM_DM5R)
-		ucPrintCentered(16, currentLanguage->delete_contact_qm, FONT_SM);
-#else
 		ucPrintCentered(16, currentLanguage->delete_contact_qm, FONT_MD);
-#endif
 		ucDrawChoice(CHOICE_YESNO, false);
 		break;
 	case MENU_CONTACT_LIST_DELETED:
 		codeplugUtilConvertBufToString(contactListContactData.name, nameBuf, 16);
 //		menuDisplayTitle(nameBuf);
-#if defined(PLATFORM_DM5R)
-		ucPrintCentered(16, currentLanguage->contact_deleted, FONT_SM);
-#else
 		ucPrintCentered(16, currentLanguage->contact_deleted, FONT_MD);
-#endif
 		ucDrawChoice(CHOICE_DISMISS, false);
 		break;
 	case MENU_CONTACT_LIST_TG_IN_RXGROUP:
 		codeplugUtilConvertBufToString(contactListContactData.name, nameBuf, 16);
 		menuDisplayTitle(nameBuf);
-#if defined(PLATFORM_DM5R)
-		ucPrintCentered(16, currentLanguage->contact_used, FONT_SM);
-		ucPrintCentered(24, currentLanguage->in_rx_group, FONT_SM);
-#else
 		ucPrintCentered(16, currentLanguage->contact_used, FONT_MD);
-		ucPrintCentered(32, currentLanguage->in_rx_group, FONT_MD);
-#endif
+		ucPrintCentered(LCD_Y_RES / 2, currentLanguage->in_rx_group, FONT_MD);
 		ucDrawChoice(CHOICE_DISMISS, false);
 		break;
 	}
