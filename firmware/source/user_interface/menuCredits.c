@@ -23,11 +23,7 @@ static void handleEvent(uiEvent_t *ev);
 static void scrollDownOneLine(void);
 
 //#define CREDIT_TEXT_LENGTH 33
-#if defined(PLATFORM_DM5R)
-static const int NUM_LINES_PER_SCREEN = 4;
-#else
-static const int NUM_LINES_PER_SCREEN = 6;
-#endif
+static int NUM_LINES_PER_SCREEN = (LCD_Y_RES - 16) / 8;
 const int NUM_CREDITS = 6;
 static const char *creditTexts[] = {"Roger VK3KYY","Kai DG4KLU","Jason VK7ZJA","Alex DL4LEX","Daniel F1RMB","Colin G4EML"};
 static int currentDisplayIndex=0;
@@ -60,11 +56,7 @@ static void updateScreen(void)
 	ucClearBuf();
 	menuDisplayTitle(currentLanguage->credits);
 
-#if defined(PLATFORM_DM5R)
-	for(int i=0;i<4;i++)
-#else
-	for(int i=0;i<6;i++)
-#endif
+	for(int i = 0;i < NUM_LINES_PER_SCREEN;i++)
 	{
 		if ((i+currentDisplayIndex) < NUM_CREDITS)
 		{
