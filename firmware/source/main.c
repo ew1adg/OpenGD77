@@ -579,23 +579,22 @@ void fw_main_task(void *data)
         	{
         		toggle_torch(&torch_state);
         	}
-#endif
 
-#if defined(PLATFORM_DM5R)
         	if ((battery_voltage < CUTOFF_VOLTAGE_LOWER_HYST)
-        			&& (menuSystemGetCurrentMenuNumber() != MENU_POWER_OFF))
-#else
-        	if (((GPIO_PinRead(GPIO_Power_Switch, Pin_Power_Switch) != 0)
-        			|| (battery_voltage < CUTOFF_VOLTAGE_LOWER_HYST))
-        			&& (menuSystemGetCurrentMenuNumber() != MENU_POWER_OFF))
-#endif
+        	        	&& (menuSystemGetCurrentMenuNumber() != MENU_POWER_OFF))
         	{
         		if (battery_voltage < CUTOFF_VOLTAGE_LOWER_HYST)
         		{
         			show_lowbattery();
-#if defined(PLATFORM_DM5R)
         			fw_powerOffFinalStage();
 #else
+            if (((GPIO_PinRead(GPIO_Power_Switch, Pin_Power_Switch) != 0)
+            			|| (battery_voltage < CUTOFF_VOLTAGE_LOWER_HYST))
+            			&& (menuSystemGetCurrentMenuNumber() != MENU_POWER_OFF))
+        	{
+        		if (battery_voltage < CUTOFF_VOLTAGE_LOWER_HYST)
+        		{
+        			show_lowbattery();
         			if (GPIO_PinRead(GPIO_Power_Switch, Pin_Power_Switch) != 0)
         			{
         				fw_powerOffFinalStage();
