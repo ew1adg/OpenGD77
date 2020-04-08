@@ -31,11 +31,11 @@
 
 typedef enum
 {
-	FONT_6x8 = 0,
-	FONT_6x8_BOLD,
-	FONT_8x8,
-	FONT_8x16,
-	FONT_16x32
+	FONT_XS = 0,
+	FONT_XS_BOLD,
+	FONT_SM,
+	FONT_MD,
+	FONT_LG
 } ucFont_t;
 
 typedef enum
@@ -52,6 +52,27 @@ typedef enum
 	CHOICE_DISMISS,
 	CHOICES_NUM
 } ucChoice_t;
+
+// Font Heights
+#define FONT_XS_HEIGHT 		8
+#define FONT_XS_BOLD_HEIGHT 8
+#if defined(PLATFORM_DM5R)
+#define FONT_SM_HEIGHT		8
+#define FONT_MD_HEIGHT		8
+#define FONT_LG_HEIGHT		16
+#else
+#define FONT_SM_HEIGHT		8
+#define FONT_MD_HEIGHT		16
+#define FONT_LG_HEIGHT		32
+#endif
+
+#if defined(PLATFORM_DM5R)
+#define LCD_Y_RES 48
+#else
+#define LCD_Y_RES 64
+#endif
+#define LCD_X_RES 128
+
 
 extern uint8_t screenBuf[];
 

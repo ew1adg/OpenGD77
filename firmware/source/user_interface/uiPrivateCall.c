@@ -60,9 +60,9 @@ static void updateScreen(void)
 		strncpy(buffer, currentRec.text, 16);
 		buffer[16] = 0;
 	}
-	ucPrintCentered(32, buffer, FONT_8x16);
+	ucPrintCentered(32, buffer, FONT_MD);
 
-	ucPrintCentered(16, currentLanguage->accept_call, FONT_8x16);
+	ucPrintCentered(16, currentLanguage->accept_call, FONT_MD);
 	ucDrawChoice(CHOICE_YESNO, false);
 	ucRender();
 

@@ -106,23 +106,35 @@ int ucPrintCore(int16_t x, int16_t y, const char *szMsg, ucFont_t fontSize, ucTe
 
     switch(fontSize)
     {
-    	case FONT_6x8:
+    	case FONT_XS:
     		currentFont = (uint8_t *) font_6x8;
     		break;
-    	case FONT_6x8_BOLD:
+    	case FONT_XS_BOLD:
 			currentFont = (uint8_t *) font_6x8_bold;
     		break;
-    	case FONT_8x8:
+#if defined(PLATFORM_DM5R)
+    	case FONT_SM:
     		currentFont = (uint8_t *) font_8x8;
     		break;
-    	case FONT_8x16:
+    	case FONT_MD:
+    		currentFont = (uint8_t *) font_8x8;
+			break;
+    	case FONT_LG:
     		currentFont = (uint8_t *) font_8x16;
 			break;
-    	case FONT_16x32:
-    		currentFont = (uint8_t *) font_16x32;
-			break;
+#else
+      	case FONT_SM:
+        	currentFont = (uint8_t *) font_8x8;
+        	break;
+        case FONT_MD:
+        	currentFont = (uint8_t *) font_8x16;
+    		break;
+        case FONT_LG:
+        	currentFont = (uint8_t *) font_16x32;
+    		break;
+#endif
 
-    	default:
+        default:
     		return -2;// Invalid font selected
     		break;
     }
@@ -1019,11 +1031,7 @@ void ucDrawChoice(ucChoice_t choice, bool clearRegion)
 		if (x < 2)
 			x = 2;
 
-#if defined(PLATFORM_DM5R)
-		ucPrintAt(x, y, lText, FONT_8x8);
-#else
-		ucPrintAt(x, y, lText, FONT_8x16);
-#endif
+		ucPrintAt(x, y, lText, FONT_MD);
 	}
 
 	if(rText)
@@ -1034,11 +1042,7 @@ void ucDrawChoice(ucChoice_t choice, bool clearRegion)
 		if ((x + len) > 126)
 			x = (126 - len);
 
-#if defined(PLATFORM_DM5R)
-		ucPrintAt(x, y, rText, FONT_8x8);
-#else
-		ucPrintAt(x, y, rText, FONT_8x16);
-#endif
+		ucPrintAt(x, y, rText, FONT_MD);
 	}
 }
 

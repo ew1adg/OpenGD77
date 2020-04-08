@@ -133,11 +133,8 @@ static void updateScreen(bool forceRedraw)
 
 			if ((prevAverageBatteryVoltage != averageBatteryVoltage) || (averageBatteryVoltage < BATTERY_CRITICAL_VOLTAGE) || forceRedraw)
 			{
-#if defined(PLATFORM_DM5R)
-				const int MAX_BATTERY_BAR_HEIGHT = 20;
-#else
-				const int MAX_BATTERY_BAR_HEIGHT = 36;
-#endif
+				int MAX_BATTERY_BAR_HEIGHT = LCD_Y_RES - 28;
+
 				char buffer[17];
 				int val1 = averageBatteryVoltage / 10;
 				int val2 = averageBatteryVoltage - (val1 * 10);
@@ -151,27 +148,15 @@ static void updateScreen(bool forceRedraw)
 
 				if (forceRedraw)
 				{
-#if defined(PLATFORM_DM5R)
 					// Clear whole drawing region
-					ucFillRect(0, 14, 128, 48 - 14, true);
+					ucFillRect(0, 14, 128, LCD_Y_RES - 14, true);
 
 					// Draw...
 					// Inner body frame
-					ucDrawRoundRect(97, 20, 26, 26, 3, true);
+					ucDrawRoundRect(97, 20, 26, LCD_Y_RES - 22, 3, true);
 
 					// Outer body frame
-					ucDrawRoundRect(96, 19, 28, 28, 3, true);
-#else
-					// Clear whole drawing region
-					ucFillRect(0, 14, 128, 64 - 14, true);
-
-					// Draw...
-					// Inner body frame
-					ucDrawRoundRect(97, 20, 26, 42, 3, true);
-
-					// Outer body frame
-					ucDrawRoundRect(96, 19, 28, 44, 3, true);
-#endif
+					ucDrawRoundRect(96, 19, 28, LCD_Y_RES - 20, 3, true);
 
 					// Positive pole frame
 					ucFillRoundRect(96+9, 15, 10, 6, 2, true);
@@ -184,11 +169,7 @@ static void updateScreen(bool forceRedraw)
 					ucFillRoundRect(100, 23, 20, MAX_BATTERY_BAR_HEIGHT, 2, false);
 				}
 
-#if defined(PLATFORM_DM5R)
-				ucPrintAt(20, 16, buffer, FONT_16x32);
-#else
-				ucPrintAt(20, 22, buffer, FONT_16x32);
-#endif
+				ucPrintAt(20, 22, buffer, FONT_LG);
 
 				uint32_t h = (uint32_t)(((averageBatteryVoltage - CUTOFF_VOLTAGE_UPPER_HYST) * MAX_BATTERY_BAR_HEIGHT) / (BATTERY_MAX_VOLTAGE - CUTOFF_VOLTAGE_UPPER_HYST));
 				if (h > MAX_BATTERY_BAR_HEIGHT)
@@ -201,11 +182,7 @@ static void updateScreen(bool forceRedraw)
 			}
 
 			// Low blinking arrow
-#if defined(PLATFORM_DM5R)
-			ucFillTriangle(63, 47, 59, 43, 67, 43, blink);
-#else
-			ucFillTriangle(63, 63, 59, 59, 67, 59, blink);
-#endif
+			ucFillTriangle(63, LCD_Y_RES - 1, 59, LCD_Y_RES - 5, 67, LCD_Y_RES - 5, blink);
 		}
 		break;
 
@@ -233,11 +210,8 @@ static void updateScreen(bool forceRedraw)
 			{
 				static const uint8_t chartX = 2 + (2 * 6) + 3 + 2;
 				static const uint8_t chartY = 14 + 1 + 2;
-#if defined(PLATFORM_DM5R)
-				static const uint8_t chartHeight = 22;
-#else
-				static const uint8_t chartHeight = 38;
-#endif
+				static uint8_t chartHeight = LCD_Y_RES - 26;
+
 				// Min is 6.4V, Max is 8.2V
 				// Pick: MIN @ 7V, MAX @ 8V
 				uint32_t minVH = (uint32_t)(((70 - CUTOFF_VOLTAGE_UPPER_HYST) * chartHeight) / (BATTERY_MAX_VOLTAGE - CUTOFF_VOLTAGE_UPPER_HYST));
@@ -249,11 +223,7 @@ static void updateScreen(bool forceRedraw)
 				if (forceRedraw)
 				{
 					// Clear whole drawing region
-#if defined(PLATFORM_DM5R)
-					ucFillRect(0, 14, 128, 48 - 14, true);
-#else
-					ucFillRect(0, 14, 128, 64 - 14, true);
-#endif
+					ucFillRect(0, 14, 128, LCD_Y_RES - 14, true);
 
 					// 2 axis chart
 					ucDrawFastVLine(chartX - 3, chartY - 2, chartHeight + 2 + 3, true);
@@ -263,9 +233,9 @@ static void updateScreen(bool forceRedraw)
 
 					// Min/Max Voltage ticks and values
 					ucDrawFastHLine(chartX - 6, (chartY + chartHeight) - minVH, 3, true);
-					ucPrintAt(chartX - 3 - 12 - 3, ((chartY + chartHeight) - minVH) - 3, "7V", FONT_6x8);
+					ucPrintAt(chartX - 3 - 12 - 3, ((chartY + chartHeight) - minVH) - 3, "7V", FONT_XS);
 					ucDrawFastHLine(chartX - 6, (chartY + chartHeight) - maxVH, 3, true);
-					ucPrintAt(chartX - 3 - 12 - 3, ((chartY + chartHeight) - maxVH) - 3, "8V", FONT_6x8);
+					ucPrintAt(chartX - 3 - 12 - 3, ((chartY + chartHeight) - maxVH) - 3, "8V", FONT_XS);
 
 					// Time ticks
 					for (uint8_t i = 0; i < chartWidth + 2; i += 22 /* ~ 15 minutes */)
@@ -298,11 +268,7 @@ static void updateScreen(bool forceRedraw)
 			}
 
 			// Low blinking arrow
-#if defined(PLATFORM_DM5R)
-			ucFillTriangle(63, 47, 59, 43, 67, 43, blink);
-#else
-			ucFillTriangle(63, 59, 59, 63, 67, 63, blink);
-#endif
+			ucFillTriangle(63, LCD_Y_RES - 1, 59, LCD_Y_RES - 5, 67, LCD_Y_RES - 5, blink);
 		}
 		break;
 	}

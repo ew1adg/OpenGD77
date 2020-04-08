@@ -63,21 +63,13 @@ static void redrawScreen(bool update, bool state)
 	if (update)
 	{
 		// Clear inner rect only
-#if defined(PLATFORM_DM5R)
-		ucFillRoundRect(5, 3, 118, 40, 5, false);
-#else
-		ucFillRoundRect(5, 3, 118, 56, 5, false);
-#endif
+		ucFillRoundRect(5, 3, 118, LCD_Y_RES - 8, 5, false);
 	}
 	else
 	{
 		// Clear whole screen
 		ucClearBuf();
-#if defined(PLATFORM_DM5R)
-		ucDrawRoundRectWithDropShadow(4, 4, 120, 42, 5, true);
-#else
-		ucDrawRoundRectWithDropShadow(4, 4, 120, 58, 5, true);
-#endif
+		ucDrawRoundRectWithDropShadow(4, 4, 120, LCD_Y_RES - 6, 5, true);
 	}
 
 	if (state)
@@ -99,25 +91,20 @@ static void redrawScreen(bool update, bool state)
 		}
 		buf[bufferLen - 1] = 0;
 
+		ucPrintCentered(6, buf, FONT_MD);
 #if defined(PLATFORM_DM5R)
-		ucPrintCentered(6, buf, FONT_6x8_BOLD);
-		ucPrintCentered(14, currentLanguage->locked, FONT_6x8_BOLD);
-		ucPrintCentered(24, currentLanguage->press_blue_plus_star, FONT_6x8);
-		ucPrintCentered(32, currentLanguage->to_unlock, FONT_6x8);
+		ucPrintCentered(14, currentLanguage->locked, FONT_MD);
+		ucPrintCentered(24, currentLanguage->press_blue_plus_star, FONT_XS);
+		ucPrintCentered(32, currentLanguage->to_unlock, FONT_XS);
 #else
-		ucPrintCentered(6, buf, FONT_8x16);
-		ucPrintCentered(22, currentLanguage->locked, FONT_8x16);
-		ucPrintCentered(40, currentLanguage->press_blue_plus_star, FONT_6x8);
-		ucPrintCentered(48, currentLanguage->to_unlock, FONT_6x8);
+		ucPrintCentered(22, currentLanguage->locked, FONT_MD);
+		ucPrintCentered(40, currentLanguage->press_blue_plus_star, FONT_XS);
+		ucPrintCentered(48, currentLanguage->to_unlock, FONT_XS);
 #endif
 	}
 	else
 	{
-#if defined(PLATFORM_DM5R)
-		ucPrintCentered(16, currentLanguage->unlocked, FONT_8x16);
-#else
-		ucPrintCentered(24, currentLanguage->unlocked, FONT_8x16);
-#endif
+		ucPrintCentered((LCD_Y_RES - 16) / 2, currentLanguage->unlocked, FONT_MD);
 	}
 
 	ucRender();

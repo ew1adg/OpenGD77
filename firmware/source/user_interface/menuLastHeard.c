@@ -96,21 +96,13 @@ void menuLastHeardUpdateScreen(bool showTitleOrHeader, bool displayDetails)
 	{
 		if (dmrIDLookup(item->id, &foundRecord))
 		{
-#if defined(PLATFORM_DM5R)
-			menuLastHeardDisplayTA(16 + (numDisplayed * 10), foundRecord.text, item->time, now, item->talkGroupOrPcId, 20, displayDetails);
-#else
-			menuLastHeardDisplayTA(16 + (numDisplayed * 16), foundRecord.text, item->time, now, item->talkGroupOrPcId, 20, displayDetails);
-#endif
+			menuLastHeardDisplayTA(16 + (numDisplayed * MENU_ENTRY_HEIGHT), foundRecord.text, item->time, now, item->talkGroupOrPcId, 20, displayDetails);
 		}
 		else
 		{
 			if (item->talkerAlias[0] != 0x00)
 			{
-#if defined(PLATFORM_DM5R)
-				menuLastHeardDisplayTA(16 + (numDisplayed * 10), item->talkerAlias, item->time, now, item->talkGroupOrPcId, 32, displayDetails);
-#else
-				menuLastHeardDisplayTA(16 + (numDisplayed * 16), item->talkerAlias, item->time, now, item->talkGroupOrPcId, 32, displayDetails);
-#endif
+				menuLastHeardDisplayTA(16 + (numDisplayed * MENU_ENTRY_HEIGHT), item->talkerAlias, item->time, now, item->talkGroupOrPcId, 32, displayDetails);
 			}
 			else
 			{
@@ -118,11 +110,7 @@ void menuLastHeardUpdateScreen(bool showTitleOrHeader, bool displayDetails)
 
 				snprintf(buffer, 17, "ID:%d", item->id);
 				buffer[16] = 0;
-#if defined(PLATFORM_DM5R)
-				menuLastHeardDisplayTA(16 + (numDisplayed * 10), buffer, item->time, now, item->talkGroupOrPcId, 17, displayDetails);
-#else
-				menuLastHeardDisplayTA(16 + (numDisplayed * 16), buffer, item->time, now, item->talkGroupOrPcId, 17, displayDetails);
-#endif
+				menuLastHeardDisplayTA(16 + (numDisplayed * MENU_ENTRY_HEIGHT), buffer, item->time, now, item->talkGroupOrPcId, 17, displayDetails);
 			}
 		}
 
@@ -189,6 +177,12 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 {
 	char buffer[37]; // Max: TA 27 (in 7bit format) + ' [' + 6 (Maidenhead)  + ']' + NULL
 
+#if defined(PLATFORM_DM5R)
+#define VFO_MIN_SIGN_OFFSET 0
+#else
+#define VFO_MIN_SIGN_OFFSET 6
+#endif
+
 	if (displayDetails)
 	{
 		uint32_t diffTimeInMins = (((now - time) / 1000U) / 60U);
@@ -196,24 +190,14 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 
 		// PC or TG
 		sprintf(buffer, "%s %u", (((TGorPC >> 24) == PC_CALL_FLAG) ? "PC" : "TG"), tg);
-#if defined(PLATFORM_DM5R)
-		ucPrintAt(0, y, buffer, FONT_8x8);
-#else
-		ucPrintAt(0, y, buffer, FONT_8x16);
-#endif
+		ucPrintAt(0, y, buffer, FONT_MD);
 
 		// Time
 		snprintf(buffer, 5, "%d", diffTimeInMins);
 		buffer[5] = 0;
 
-#if defined(PLATFORM_DM5R)
-		ucPrintAt((128 - (3 * 6)), y, "min", FONT_6x8);
-		ucPrintAt((128 - (strlen(buffer) * 8) - (3 * 6) - 1), y, buffer, FONT_8x8);
-#else
-		ucPrintAt((128 - (3 * 6)), (y + 6), "min", FONT_6x8);
-		ucPrintAt((128 - (strlen(buffer) * 8) - (3 * 6) - 1), y, buffer, FONT_8x16);
-#endif
-
+		ucPrintAt((128 - (3 * 6)), y + VFO_MIN_SIGN_OFFSET, "min", FONT_XS);
+		ucPrintAt((128 - (strlen(buffer) * 8) - (3 * 6) - 1), y, buffer, FONT_MD);
 	}
 	else // search for callsign + first name
 	{
@@ -233,11 +217,7 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 					memcpy(buffer, text, cpos);
 					buffer[cpos] = 0;
 
-#if defined(PLATFORM_DM5R)
-					ucPrintCentered(y, chomp(buffer), FONT_8x8);
-#else
-					ucPrintCentered(y, chomp(buffer), FONT_8x16);
-#endif
+					ucPrintCentered(y, chomp(buffer), FONT_MD);
 				}
 				else // Nope, look for first name
 				{
@@ -261,11 +241,7 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 						snprintf(outputBuf, 16, "%s %s", chomp(buffer), chomp(nameBuf));
 						outputBuf[16] = 0;
 
-#if defined(PLATFORM_DM5R)
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x8);
-#else
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x16);
-#endif
+						ucPrintCentered(y, chomp(outputBuf), FONT_MD);
 					}
 					else
 					{
@@ -279,11 +255,7 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 						snprintf(outputBuf, 16, "%s %s", chomp(buffer), chomp(nameBuf));
 						outputBuf[16] = 0;
 
-#if defined(PLATFORM_DM5R)
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x8);
-#else
-						ucPrintCentered(y, chomp(outputBuf), FONT_8x16);
-#endif
+						ucPrintCentered(y, chomp(outputBuf), FONT_MD);
 					}
 				}
 			}
@@ -293,11 +265,7 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 				memcpy(buffer, text, 16);
 				buffer[16] = 0;
 
-#if defined(PLATFORM_DM5R)
-				ucPrintCentered(y, chomp(buffer), FONT_8x8);
-#else
-				ucPrintCentered(y, chomp(buffer), FONT_8x16);
-#endif
+				ucPrintCentered(y, chomp(buffer), FONT_MD);
 			}
 		}
 		else // short callsign
@@ -305,11 +273,7 @@ static void menuLastHeardDisplayTA(uint8_t y, char *text, uint32_t time, uint32_
 			memcpy(buffer, text, strlen(text));
 			buffer[strlen(text)] = 0;
 
-#if defined(PLATFORM_DM5R)
-			ucPrintCentered(y, chomp(buffer), FONT_8x8);
-#else
-			ucPrintCentered(y, chomp(buffer), FONT_8x16);
-#endif
+			ucPrintCentered(y, chomp(buffer), FONT_MD);
 		}
 	}
 }
