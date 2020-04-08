@@ -74,11 +74,7 @@ static void updateScreen(void)
 		ucPrintCore(0, 3, buffer, FONT_SM, TEXT_ALIGN_RIGHT, false);
 
 		sprintf(buffer, "%d%s", dBm, "dBm");
-#if defined(PLATFORM_DM5R)
-		ucPrintCentered(16, buffer, FONT_MD);
-#else
 		ucPrintCentered(20, buffer, FONT_MD);
-#endif
 
 		barGraphLength = ((dBm + 130) * 24)/10;
 		if (barGraphLength<0)
