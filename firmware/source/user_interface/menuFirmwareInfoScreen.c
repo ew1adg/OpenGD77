@@ -49,11 +49,11 @@ static void updateScreen(void)
 #elif defined(PLATFORM_DM1801)
 	ucPrintCentered(5, "OpenDM1801", FONT_MD);
 #elif defined(PLATFORM_DM5R)
-	ucPrintCentered(0, "OpenDM5R", FONT_MD);
+	ucPrintCentered(2, "OpenDM5R", FONT_MD);
 #endif
 
 #if defined(PLATFORM_DM5R)
-	ucPrintCentered(16, currentLanguage->built, FONT_SM);
+	ucPrintCentered(14, currentLanguage->built, FONT_SM);
 	ucPrintCentered(24,__TIME__, FONT_SM);
 	ucPrintCentered(32,__DATE__, FONT_SM);
 	ucPrintCentered(40, buf, FONT_SM);
