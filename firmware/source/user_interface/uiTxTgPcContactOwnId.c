@@ -86,7 +86,7 @@ static void updateCursor(void)
 		{
 			sLen *= 8;
 
-			ucPrintCore((((128 - sLen) >> 1) + sLen), 32, "_", FONT_MD, 0, blink);
+			ucPrintCore((((128 - sLen) >> 1) + sLen), LCD_Y_RES / 2, "_", FONT_MD, 0, blink);
 
 			blink = !blink;
 			lastBlink = m;
@@ -104,20 +104,20 @@ static void updateScreen(void)
 
 	ucClearBuf();
 
-	ucDrawRoundRectWithDropShadow(2, y - 1, (128 - 6), 21, 3, true);
+	ucDrawRoundRectWithDropShadow(2, y - 1, (128 - 6), ((LCD_Y_RES / 8) - 1) * 3, 3, true);
 
 	// Not really centered, off by 2 pixels
 	ucPrintAt(((128 - sLen) >> 1) - 2, y, (char *)menuName[gMenusCurrentItemIndex], FONT_MD);
 
 	if (pcIdx == 0)
 	{
-		ucPrintCentered(32, (char *)digits, FONT_MD);
+		ucPrintCentered(LCD_Y_RES / 2, (char *)digits, FONT_MD);
 	}
 	else
 	{
 		codeplugUtilConvertBufToString(contact.name, buf, 16);
-		ucPrintCentered(32, buf, FONT_MD);
-		ucPrintCentered(52, (char *)digits, FONT_XS);
+		ucPrintCentered(LCD_Y_RES / 2, buf, FONT_MD);
+		ucPrintCentered(LCD_Y_RES - 12, (char *)digits, FONT_XS);
 	}
 
 	displayLightTrigger();
