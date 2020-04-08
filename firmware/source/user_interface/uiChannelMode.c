@@ -371,6 +371,18 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 	struct_codeplugContact_t contact;
 	int contactIndex;
 
+#if defined(PLATFORM_DM5R)
+	char CH_NAME_Y_POS = 40;
+	char CONTACT_Y_POS_OFFSET = 2;
+	char XBAR_Y_POS = 15;
+	char XBAR_H = 4;
+#else
+	char CH_NAME_Y_POS = 50;
+	char CONTACT_Y_POS_OFFSET = 0;
+	char XBAR_Y_POS = 17;
+	char XBAR_H = 9;
+#endif
+
 	// Only render the header, then wait for the next run
 	// Otherwise the screen could remain blank if TG and PC are == 0
 	// since menuDisplayQSODataState won't be set to QSO_DISPLAY_IDLE
@@ -412,11 +424,7 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 
 				snprintf(buffer, bufferLen, " %d ", txTimeSecs);
 				buffer[bufferLen - 1] = 0;
-#if defined(PLATFORM_DM5R)
-				ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_MD);
-#else
 				ucPrintCentered(TX_TIMER_Y_OFFSET, buffer, FONT_LG);
-#endif
 				verticalPositionOffset=16;
 			}
 			else
@@ -426,13 +434,8 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 				{
 					printToneAndSquelch();
 
-#if defined(PLATFORM_DM5R)
-					printFrequency(false, false, 31, (reverseRepeater ? currentChannelData->txFreq : currentChannelData->rxFreq), false, false);
-					printFrequency(true, false, 40, (reverseRepeater ? currentChannelData->rxFreq : currentChannelData->txFreq), false, false);
-#else
 					printFrequency(false, false, 32, (reverseRepeater ? currentChannelData->txFreq : currentChannelData->rxFreq), false, false);
-					printFrequency(true, false, 48, (reverseRepeater ? currentChannelData->rxFreq : currentChannelData->txFreq), false, false);
-#endif
+					printFrequency(true, false, LCD_Y_RES - FONT_MD_HEIGHT, (reverseRepeater ? currentChannelData->rxFreq : currentChannelData->txFreq), false, false);
 				}
 				else
 				{
@@ -448,11 +451,7 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 							snprintf(nameBuf, nameBufferLen, "%s Ch:%d",currentLanguage->all_channels, channelNumber);
 						}
 						nameBuf[nameBufferLen - 1] = 0;
-#if defined(PLATFORM_DM5R)
-						ucPrintCentered(40 , nameBuf, FONT_XS);
-#else
-						ucPrintCentered(50 , nameBuf, FONT_XS);
-#endif
+						ucPrintCentered(CH_NAME_Y_POS , nameBuf, FONT_XS);
 					}
 					else
 					{
@@ -467,11 +466,7 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 							snprintf(nameBuf, nameBufferLen, "%s Ch:%d", currentZoneName,channelNumber);
 							nameBuf[nameBufferLen - 1] = 0;
 						}
-#if defined(PLATFORM_DM5R)
-						ucPrintCentered(40, (char *)nameBuf, FONT_XS);
-#else
-						ucPrintCentered(50, (char *)nameBuf, FONT_XS);
-#endif
+						ucPrintCentered(CH_NAME_Y_POS, (char *)nameBuf, FONT_XS);
 					}
 				}
 			}
@@ -479,11 +474,7 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 			if (!displayChannelSettings)
 			{
 				codeplugUtilConvertBufToString(channelScreenChannelData.name, nameBuf, 16);
-#if defined(PLATFORM_DM5R)
-				ucPrintCentered(24 + verticalPositionOffset, nameBuf, FONT_SM);
-#else
-				ucPrintCentered(32 + verticalPositionOffset, nameBuf, FONT_MD);
-#endif
+				ucPrintCentered(LCD_Y_RES / 2 + verticalPositionOffset, nameBuf, FONT_MD);
 			}
 
 			if (trxGetMode() == RADIO_MODE_DIGITAL)
@@ -511,21 +502,13 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 						}
 					}
 					nameBuf[bufferLen - 1] = 0;
-#if defined(PLATFORM_DM5R)
-					ucDrawRect(0, CONTACT_Y_POS + verticalPositionOffset, 128, 11, true);
-#else
-					ucDrawRect(0, CONTACT_Y_POS + verticalPositionOffset, 128, 16, true);
-#endif
+					ucDrawRect(0, CONTACT_Y_POS + verticalPositionOffset, 128, MENU_ENTRY_HEIGHT, true);
 				}
 				else
 				{
 					codeplugUtilConvertBufToString(contactData.name, nameBuf, 16);
 				}
-#if defined(PLATFORM_DM5R)
-				ucPrintCentered(CONTACT_Y_POS + verticalPositionOffset + 2, nameBuf, FONT_SM);
-#else
-				ucPrintCentered(CONTACT_Y_POS + verticalPositionOffset, nameBuf, FONT_MD);
-#endif
+				ucPrintCentered(CONTACT_Y_POS + verticalPositionOffset + CONTACT_Y_POS_OFFSET, nameBuf, FONT_MD);
 			}
 			// Squelch will be cleared later, 1s after last change
 			else if(displaySquelch && !trxIsTransmitting && !displayChannelSettings)
@@ -535,19 +518,11 @@ void menuChannelModeUpdateScreen(int txTimeSecs)
 				strncpy(buffer, currentLanguage->squelch, 9);
 				buffer[8] = 0; // Avoid overlap with bargraph
 				// Center squelch word between col0 and bargraph, if possible.
-#if defined(PLATFORM_DM5R)
-				ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_SM);
-#else
 				ucPrintAt(0 + ((strlen(buffer) * 8) < xbar - 2 ? (((xbar - 2) - (strlen(buffer) * 8)) >> 1) : 0), 16, buffer, FONT_MD);
-#endif
 				int bargraph = 1 + ((currentChannelData->sql - 1) * 5) /2;
-#if defined(PLATFORM_DM5R)
-				ucDrawRect(xbar - 2, 15, 55, 8, true);
-				ucFillRect(xbar, 17, bargraph, 4, false);
-#else
-				ucDrawRect(xbar - 2, 17, 55, 13, true);
-				ucFillRect(xbar, 19, bargraph, 9, false);
-#endif
+
+				ucDrawRect(xbar - 2, XBAR_Y_POS, 55, XBAR_H + 4, true);
+				ucFillRect(xbar, XBAR_Y_POS + 2, bargraph, XBAR_H, false);
 			}
 
 			// SK1 is pressed, we don't want to clear the first info row after 1s
