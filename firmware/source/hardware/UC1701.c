@@ -1031,11 +1031,7 @@ void ucDrawChoice(ucChoice_t choice, bool clearRegion)
 		if (x < 2)
 			x = 2;
 
-#if defined(PLATFORM_DM5R)
-		ucPrintAt(x, y, lText, FONT_SM);
-#else
 		ucPrintAt(x, y, lText, FONT_MD);
-#endif
 	}
 
 	if(rText)
@@ -1046,11 +1042,7 @@ void ucDrawChoice(ucChoice_t choice, bool clearRegion)
 		if ((x + len) > 126)
 			x = (126 - len);
 
-#if defined(PLATFORM_DM5R)
-		ucPrintAt(x, y, rText, FONT_SM);
-#else
 		ucPrintAt(x, y, rText, FONT_MD);
-#endif
 	}
 }
 
