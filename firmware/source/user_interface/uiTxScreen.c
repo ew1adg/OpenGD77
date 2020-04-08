@@ -66,28 +66,16 @@ int menuTxScreen(uiEvent_t *ev, bool isFirstRun)
 			// But this would require some sort of timer callback system, which we don't currently have.
 			//
 			ucClearBuf();
-#if defined(PLATFORM_DM5R)
-			ucDrawRoundRectWithDropShadow(4, 4, 120, 42, 5, true);
+			ucDrawRoundRectWithDropShadow(4, 4, 120, LCD_Y_RES - 6, 5, true);
 			ucPrintCentered(4, currentLanguage->error, FONT_LG);
-#else
-			ucDrawRoundRectWithDropShadow(4, 4, 120, 58, 5, true);
-			ucPrintCentered(4, currentLanguage->error, FONT_LG);
-#endif
+
 			if ((currentChannelData->flag4 & 0x04) != 0x00)
 			{
-#if defined(PLATFORM_DM5R)
-				ucPrintCentered(32, currentLanguage->rx_only, FONT_XS);
-#else
-				ucPrintCentered(40, currentLanguage->rx_only, FONT_MD);
-#endif
+				ucPrintCentered(LCD_Y_RES - 24, currentLanguage->rx_only, FONT_MD);
 			}
 			else
 			{
-#if defined(PLATFORM_DM5R)
-				ucPrintCentered(40, currentLanguage->out_of_band, FONT_XS);
-#else
-				ucPrintCentered(40, currentLanguage->out_of_band, FONT_MD);
-#endif
+				ucPrintCentered(LCD_Y_RES - 24, currentLanguage->out_of_band, FONT_MD);
 			}
 			ucRender();
 			displayLightOverrideTimeout(-1);
@@ -123,11 +111,7 @@ int menuTxScreen(uiEvent_t *ev, bool isFirstRun)
 				{
 					set_melody(melody_tx_timeout_beep);
 					ucClearBuf();
-#if defined(PLATFORM_DM5R)
-					ucPrintCentered(20, currentLanguage->timeout, FONT_MD);
-#else
 					ucPrintCentered(20, currentLanguage->timeout, FONT_LG);
-#endif
 					ucRender();
 					PTTToggledDown = false;
 					mto = ev->time;
